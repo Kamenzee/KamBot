@@ -1,0 +1,10 @@
+.env
+*.db
+__pycache__/
+*.pyc
+venv/
+*.log
+kambot.sqlite
+.idea/
+.cache/
+.local/
