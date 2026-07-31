@@ -1,6 +1,6 @@
 # A class specifically created for KamBot's game, AlphaBot.  It stores each guild's game state and stats.
-import asyncpg
-from typing import Dict
+
+
 
 
 class AlphaBotGuild:
@@ -75,7 +75,7 @@ class AlphaBotGuild:
     def getLetterValue(self):
         return self.current_letter_value
 
-    def getGameStatus(self) -> bool:
+    def getGameStatus(self) -> int:
         return self.game_status
 
     def getLastAcceptedMember(self):
@@ -147,7 +147,7 @@ class AlphaBotGuild:
         self.savepoint_seq = ab_guild.getSavepointSeq()
         self.savepoint_value = ab_guild.getSavepointVal()
 
-    def gameOn(self) -> bool:
+    def gameOn(self) -> int:
         return self.game_status
 
     def setGameOff(self) -> None:
@@ -164,25 +164,3 @@ class AlphaBotGuild:
             return True
         else:
             return False
-
-
-class ABGameManager:
-    def __init__(self, ab_guilds_records: tuple, pool: asyncpg.Pool) -> None:
-        self.ab_guilds = self.storeGuilds(ab_guilds_records)
-        self.pool = pool
-
-    def storeGuilds(self, ab_guilds_records) -> Dict[int, AlphaBotGuild]:
-        ab_guilds = {}
-        for ab_guild in ab_guilds_records:
-            ab_guilds[ab_guilds_records[0]] = AlphaBotGuild(ab_guild[0], ab_guild[1], ab_guild[2], ab_guild[3],
-                                                            ab_guild[4], ab_guild[5], ab_guild[6], ab_guild[7])
-        return ab_guilds
-
-    def getGuildByID(self, guild_id):
-        return self.ab_guilds.get(guild_id)
-
-    def updateGuild(self, ab_guild: AlphaBotGuild):
-        self.ab_guilds[ab_guild.getGuildId()] = ab_guild
-
-    def removeGuildFromAB(self, guild_id) -> None:
-        del self.ab_guilds[guild_id]

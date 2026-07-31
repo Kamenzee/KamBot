@@ -8,3 +8,4 @@ kambot.sqlite
 .idea/
 .cache/
 .local/
+.venv/

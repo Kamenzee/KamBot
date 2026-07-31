@@ -341,18 +341,6 @@ class FFUser():
     def maxHealth(self):
         self.current_health = 100
 
-    # def getPoints(self):
-    #     return self.points
-    #
-    # def addPoints(self, points):
-    #     self.points += points
-    #
-    # def removePoints(self, points):
-    #     if self.points - points < 0:
-    #         self.points = 0
-    #     else:
-    #         self.points -= points
-
     def spanishFly(self):
         self.last_timeout_timestamp = datetime.now(timezone.utc) - timedelta(minutes=30)
 

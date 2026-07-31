@@ -1,11 +1,16 @@
 # bot.py
 
 """
-This bot is currently designed to host a hangman game for multiple Discord guilds.  More games will be added
-in the future.
+Originally starting out as a simple game of Hangman, during development I had some ideas to make a couple other games
+to add.  While it's been a great project that started after my first semester of programming classes in college and has
+many questionable choices of code design and database schema, I decided I'll give it to the world.  It's not perfect
+and I definitely didn't know exactly what I was doing when starting (I still don't), but it's something I made and I
+honestly just don't desire to maintain it anymore.  Initially, it required a PSQL Database, but before releasing it to
+ensure easy hosting I changed it to work with a simple SQLite file.
+
 Author = Mackenzie Carter
-Latest version = KamBotV1
-Date = 06/11/2022
+Latest version = KamBotV1.1
+Date = 07/31/26
 
 """
 import asyncio
@@ -24,11 +29,6 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 DBASE_FILE = os.getenv("DBASE_FILE_LOCATION")
 APP_ID = os.getenv("APP_ID")
-
-
-# logging.basicConfig(encoding='utf-8', level=logging.DEBUG,
-#                     format='%(asctime)s - %(levelname)s User ID:[%(user_id)s] Guild ID:[%(guild_id)s] - '
-#                            '%(message)s %(exception)s')
 
 class DefaultContextFilter(logging.Filter):
     """Ensures user_id/guild_id/exception always exist on log records."""

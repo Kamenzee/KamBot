@@ -15,7 +15,6 @@ To Do List:
 
 # Importing the modules needed for functionality
 import asyncio
-import asyncpg
 import discord
 from discord.ext import commands, tasks
 from discord import app_commands
@@ -58,11 +57,11 @@ class Hangman(commands.Cog):
         self.cacheGuildGames(guilds)
         self.cacheGuildStats(guilds)
 
-    def cacheGuildGames(self, guilds: asyncpg.Record) -> None:
+    def cacheGuildGames(self, guilds: list) -> None:
         for guild in guilds:
             self.game_manager.storeGame(guild)
 
-    def cacheGuildStats(self, guilds: asyncpg.Record) -> None:
+    def cacheGuildStats(self, guilds: list) -> None:
         for guild in guilds:
             self.game_manager.hm_stats.storeGuildStats(guild)
 
@@ -70,14 +69,6 @@ class Hangman(commands.Cog):
         users = await self.bot.db.fetchHangmanUserData()
         for user in users:
             self.game_manager.hm_stats.storeUserStats(user)
-
-    #
-    # async def fetchGuilds(self):
-    #     async with self.bot.pool.acquire() as conn:
-    #         guild_records = await conn.fetch("""
-    #         SELECT * FROM public.g_hangman;
-    #         """)
-    #     return guild_records
 
     @app_commands.command(name='hmhelp', description='Get the Hangman rules.')
     async def hmHelp(self, intr: discord.Interaction) -> None:
@@ -584,6 +575,3 @@ easy word list if it is there.
 async def setup(bot):
     await bot.add_cog(Hangman(bot))
 
-
-
-# https://discord.com/oauth2/authorize?client_id=969290253657575455&permissions=962341497936&integration_type=0&scope=bot

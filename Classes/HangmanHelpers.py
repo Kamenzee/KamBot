@@ -642,12 +642,6 @@ class HMGameManager:
             word = self.getCustomWord(guild_id, difficulty)
         return word.strip()
 
-    # def parseDifficulty(self, difficulty: str) -> str:
-    #     if difficulty == 'H':
-    #         return 1
-    #     elif difficulty == 'E':
-    #         return 0
-
 
     def isHard(self, diff_arg: str) -> bool:
         for diff_str in ["h", "hard"]:
@@ -796,22 +790,6 @@ class HMStatManager:
                                                            guild_stats[7], guild_stats[8], guild_stats[9],
                                                            guild_stats[15], guild_stats[16], guild_stats[17],
                                                            guild_stats[18])
-
-        # def __init__(self, guild_id: int = 0, egs: int = 0, egw: int = 0, egl: int = 0, hgs: int = 0, hgw: int = 0,
-        #              hgl: int = 0, clg: int = 0, ilg: int = 0, ceg: int = 0, chg: int = 0, ieg: int = 0, ihg: int = 0):
-        #     self.guild_id = guild_id
-        #     self.easy_games_started = egs
-        #     self.easy_games_won = egw
-        #     self.easy_games_lost = egl
-        #     self.hard_games_started = hgs
-        #     self.hard_games_won = hgw
-        #     self.hard_games_lost = hgl
-        #     self.correct_letter_guesses = clg
-        #     self.incorrect_letter_guesses = ilg
-        #     self.correct_easy_word_guesses = ceg
-        #     self.correct_hard_word_guesses = chg
-        #     self.incorrect_easy_word_guesses = ieg
-        #     self.incorrect_hard_word_guesses = ihg
 
     def storeUserStats(self, user_stats: tuple) -> None:
         self.hm_user_stats[int(f"{user_stats[0]}{user_stats[1]}")] = HMUserStats(user_stats[0], user_stats[1], user_stats[2], user_stats[3],

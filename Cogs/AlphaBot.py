@@ -14,8 +14,8 @@ Add high score, highest correct guesser ID, highest MesserUpper ID, Number value
 
 
 Author = Mackenzie Carter
-Latest version = KamBotV1
-Latest Update = 08/13/2023
+Latest version = KamBotV1.1
+Latest Update = 07/31/2026
 """
 
 
@@ -44,14 +44,6 @@ class AlphaBot(commands.Cog):
             SELECT * FROM guild_ab_stats;
             """)
         return guilds
-
-    # @commands.Cog.listener()
-    # async def on_guild_join(self, guild):
-    #     self.ab_guilds[guild.id] = AlphaBotGuild(guild.id)
-
-    # @commands.Cog.listener()
-    # async def on_guild_remove(self, guild):
-    #     del self.ab_guilds[guild.id]
 
     @app_commands.command(name='abhelp', description='Get a full description of AlphaBot!')
     async def abhelp(self, intr: discord.Interaction) -> None:
@@ -103,24 +95,7 @@ AlphaBot is as simple as that!
         except Exception as e:
             self.bot.logWarning(0, 0, f'Unable to update ABGuilds due to the following error: {str(e)}')
 
-    # async def updateGuildStatsInDB(self, guild: AlphaBotGuild) -> bool:
-    #     try:
-    #
-    #         async with self.bot.pool.acquire() as conn:
-    #             await conn.execute("""
-    #             INSERT INTO guild_ab_stats VALUES ($11, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-    #             ON CONFLICT (guild_id) DO UPDATE SET ab_channel = $1, let_val = $2, game_on = $3, last_id = $4,
-    #             latest_lets = $5, savepoint = $6, savepoint_val = $7, record_sequence = $8, record_holder = $9,
-    #             record_seq_value = $10
-    #             WHERE guild_ab_stats.guild_id = $11;
-    #             """, int(guild.getChannelId()), guild.getLetterValue(), guild.getGameStatus(), guild.getLastAcceptedMember(),
-    #                                guild.getLastLetterSeq(), guild.getSavepointSeq(), guild.getSavepointVal(),
-    #                                guild.getRecordSeq(), guild.getRecordHolder(), guild.getRecordValue(),
-    #                                guild.getGuildId())
-    #             return True
-    #     except Exception as e:
-    #         print(f"The following error has occurred in updateGuildStatsInDB(): {e}")
-    #         return False
+
 
     # Defines a startup procedure that checks whether a game was started on the latest DB deposit.
     async def startup(self):

@@ -3,7 +3,7 @@ import asyncio
 from typing import Optional, Union, List, Tuple
 
 
-import asyncpg
+
 import discord
 from discord import app_commands
 import re
@@ -15,25 +15,12 @@ import ast
 
 """
 This Cog/Class is a game designed to allow Discord users to buy, sell, and throw food at one another as well as 
-using food
-to heal healthpoints.
+using food to heal healthpoints.
 
 Author = Mackenzie Carter
-Latest version = KamBotV1
-Latest Update = 08/31/2023
+Latest version = KamBotV1.1
+Latest Update = 07/31/2026
 
-
-****** To Do List ******************************************************************************************************
-update special food functions to work with new system. - Done
-create script to update database every so often. - Done
-update users to have levels and exp. - Tentatively Done
- - determine level balance WIP
-add methods to complete multiple needed tasks after actions for better readability. - Done, I guess
-add bot variable to access and manage points - Done
-add error/log handling where needed, log necessary information. - WIP
-add hit timer so no one gets spam hit.  Does not need to be stored in DB
-************************************************************************************************************************
-***************************************
 User/Target info contains
 [0] - user_id
 [1] - guild_id
@@ -122,7 +109,7 @@ class FoodFight(commands.Cog):
         for user in users:
             self.addUserToUserDict(user)
 
-    def addUserToUserDict(self, user_info: asyncpg.Record) -> None:
+    def addUserToUserDict(self, user_info : list) -> None:
         user_key = int(f"{user_info[0]}{user_info[1]}")
         timeout = datetime.strptime(user_info[3], "%Y-%m-%d %H:%M:%S%z")
         inv_list = ast.literal_eval(user_info[8])
@@ -227,11 +214,6 @@ HAVE FUN!  Be prepared for the next games and updates from KamBot!
 
 ***EAT ELITE***""")
 
-    # Defines the generic instructions for the ff commands.
-    async def ff(self, ctx) -> None:
-        response = "Please type 'k.help ff' for detailed instructions or 'k.ffs' to see the menu."
-        await ctx.send(response)
-
     # A command is initiated when the prefix and command name are combined and sent as a message in Discord.
     # Defines the command to "throw" food at another member of the current server
     @app_commands.command(name="ffthrow", description="THROW SOME FOOD!")
@@ -250,8 +232,6 @@ HAVE FUN!  Be prepared for the next games and updates from KamBot!
                 await self.addNewFFUser(disc_target.id, interaction.guild)
             if not await self.passThrowChecks(channel, thrower_id, food, disc_target):
                 return
-            # if not await self.foodInInventory(food, thrower_id, channel):
-            #     return
             else:
                 if food.getCategory() == "special":
                     await self.getSpecial(interaction, food, disc_target)
@@ -1030,10 +1010,6 @@ HAVE FUN!  Be prepared for the next games and updates from KamBot!
         if int(f'{user_id}{guild_id}') in self.ff_users:
             del self.ff_users[int(f'{user_id}{guild_id}')]
 
-    # def addUser(self, user_id : int, guild_id : int) -> None:
-    #     if int(f'{user_id}{guild_id}') not in self.ff_users:
-    #         self.ff_users[int(f'{user_id}{guild_id}')] = FFUser(user_id, guild_id)
-    #         self.bot.db.depositNewFFUser(user_id, guild_id)
 
 
 class Buttons(discord.ui.View):
